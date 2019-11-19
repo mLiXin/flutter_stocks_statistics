@@ -1,12 +1,4 @@
-final String tableTrader = "table_trader";
-final String columnName = "name";
-final String columnId = "_id";
-final String columnFinancingFee = "financing_fee"; // 融资手续费
-final String columnWinningFee = "winning_fee"; // 中签手续费
-final String columnSubscribeFee = "subscribe_fee"; // 申购手续费
-final String columnTradingFee = "trading_fee"; // 交易手续费
-final String columnTradingRate = "trading_rate"; // 交易手续费率
-final String columnOtherFee = "other_fee"; // 备用字段
+import 'package:flutter_stocks_statistics/util/database_helper.dart';
 
 // 券商信息
 class TraderInfo {
@@ -21,7 +13,7 @@ class TraderInfo {
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      columnName: name,
+      columnTraderName: name,
       columnFinancingFee: financingFee,
       columnWinningFee: winningFee,
       columnSubscribeFee: subscriberFee,
@@ -30,7 +22,7 @@ class TraderInfo {
       columnOtherFee: otherFee
     };
     if (id != null) {
-      map[columnId] = id;
+      map[columnTraderId] = id;
     }
     return map;
   }
@@ -38,8 +30,8 @@ class TraderInfo {
   TraderInfo();
 
   TraderInfo.fromMap(Map<String, dynamic> map) {
-    id = map[columnId];
-    name = map[columnName];
+    id = map[columnTraderId];
+    name = map[columnTraderName];
     financingFee = map[columnFinancingFee];
     winningFee = map[columnWinningFee];
     subscriberFee = map[columnSubscribeFee];

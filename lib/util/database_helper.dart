@@ -1,12 +1,38 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:flutter_stocks_statistics/data/entity/account_info.dart';
-import 'package:flutter_stocks_statistics/data/entity/trader_info.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 final String dataBaseName = "stocks_statistics.db";
+
+// account
+final String tableAccount = "table_account";
+final String columnAccountId = "_id";
+final String columnAccountName = "name";
+final String columnAccountTraderId = "account_trader_id";
+final String columnAccount = "account";
+final String columnPassword = "password";
+
+// trader
+final String tableTrader = "table_trader";
+final String columnTraderId = "_id";
+final String columnTraderName = "name";
+final String columnFinancingFee = "financing_fee"; // 融资手续费
+final String columnWinningFee = "winning_fee"; // 中签手续费
+final String columnSubscribeFee = "subscribe_fee"; // 申购手续费
+final String columnTradingFee = "trading_fee"; // 交易手续费
+final String columnTradingRate = "trading_rate"; // 交易手续费率
+final String columnOtherFee = "other_fee"; // 备用字段
+
+// summary
+final String tableSummary = "table_summary";
+final String columnSumAccountId = "account_id";
+final String columnSumStockId = "stock_id";
+final String columnSubscribeCount = "subcribe_count"; // 申购数量
+final String columnWinningCount = "winning_count"; // 中签数量
+final String columnHoldCount = "hold_count"; // 卖出数量
+final String columnSoldOutTotal = "sold_out_total"; // 卖出总价格
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
@@ -26,7 +52,7 @@ class DatabaseHelper {
 
   initDb() async {
     var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'sqflite.db');
+    String path = join(databasesPath, dataBaseName);
     var ourDb = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDb;
   }
@@ -36,14 +62,37 @@ class DatabaseHelper {
     // accountInfo
     await db.execute('''
           CREATE TABLE $tableAccount (
-            $columnId INTEGER PRIMARY KEY, 
-            $columnName TEXT, 
-            $columnTraderId INTEGER, 
-            $columnAccount REAL, 
+            $columnAccountId INTEGER PRIMARY KEY, 
+            $columnAccountName TEXT, 
+            $columnAccountTraderId INTEGER, 
+            $columnAccount TEXT, 
             $columnPassword TEXT)
           ''');
+    print("Table $tableAccount is created");
 
-    print("Table is created");
+    // tableTrader
+    await db.execute('''
+      CREATE TABLE $tableTrader (
+            $columnTraderId INTEGER PRIMARY KEY, 
+            $columnTraderName TEXT, 
+            $columnFinancingFee INTEGER, 
+            $columnWinningFee INTEGER,
+            $columnSubscribeFee INTEGER,
+            $columnTradingFee INTEGER,
+            $columnTradingRate INTEGER,
+            $columnOtherFee INTEGER)
+    ''');
+
+    // tableSummary
+    await db.execute('''
+      CREATE TABLE $tableSummary (
+            $columnSumAccountId INTEGER
+            $columnSumStockId INTEGER
+            $columnSubscribeCount INTEGER
+            $columnWinningCount INTEGER
+            $columnHoldCount INTEGER
+            $columnSoldOutTotal INTEGER
+    ''');
   }
 
   //关闭

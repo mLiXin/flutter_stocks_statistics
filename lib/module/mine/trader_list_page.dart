@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stocks_statistics/data/database/trader_info_helper.dart';
 import 'package:flutter_stocks_statistics/util/navigator_helper.dart';
 import 'package:flutter_stocks_statistics/widget/common/appbar.dart';
 
-class TraderListPage extends StatelessWidget {
+class TraderListPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TraderListPageState();
+}
+
+class _TraderListPageState extends State<TraderListPage>{
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getAllInfo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -20,4 +34,9 @@ class TraderListPage extends StatelessWidget {
       ),
     );
   }
+
+  Future _getAllInfo() async{
+    TraderInfoHelper.getTraderInfoList();
+  }
+
 }

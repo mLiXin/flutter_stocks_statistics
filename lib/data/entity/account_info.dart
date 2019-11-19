@@ -1,10 +1,6 @@
-final String tableAccount = "table_account";
-final String columnAccountId = "_id";
-final String columnAccountName = "name";
-final String columnTraderId = "traderId";
-final String columnAccount = "account";
-final String columnPassword = "password";
+import 'package:flutter_stocks_statistics/util/database_helper.dart';
 
+// 账号信息
 class AccountInfo {
   int id;
   String name;
@@ -15,7 +11,7 @@ class AccountInfo {
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       columnAccountName: name,
-      columnTraderId: traderId,
+      columnAccountTraderId: traderId,
       columnAccount: account,
       columnPassword: password,
     };

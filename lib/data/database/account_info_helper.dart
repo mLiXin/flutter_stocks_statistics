@@ -16,11 +16,11 @@ class AccountInfoHelper {
       return null;
     }
 
-    List<AccountInfo> accountInfos = [];
+    List<AccountInfo> accountList = [];
     for (int i = 0; i < maps.length; i++) {
-      accountInfos.add(AccountInfo.fromMap(maps[i]));
+      accountList.add(AccountInfo.fromMap(maps[i]));
     }
 
-    return accountInfos;
+    return accountList;
   }
 }
