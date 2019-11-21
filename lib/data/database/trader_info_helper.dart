@@ -28,7 +28,7 @@ class TraderInfoHelper {
   static Future<bool> addTrader(TraderInfo traderInfo) async {
     var db = await DatabaseHelper().db;
     traderInfo.id = await db.insert(tableTrader, traderInfo.toMap());
-    LogHelper.e("addTrader Success -- ${traderInfo.id}");
+    LogHelper.e("addTrader Success and traderInfo.id = ${traderInfo.id}");
     return traderInfo.id != null;
   }
 }

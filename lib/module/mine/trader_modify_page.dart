@@ -116,12 +116,13 @@ class _TraderModifyPageState extends State<TraderModifyPage> {
     info.tradingRate = int.parse(_tradingRateController.text);
     info.otherFee = int.parse(_otherFeeController.text);
 
-    bool addSuccess = await TraderApi.addTrader(info);
-    if (addSuccess) {
-      Navigator.pop(context);
-    } else {
-      ToastHelper.showErrorToast("add fail！！！");
-    }
+    await TraderApi.addTrader(info).then((success) {
+      if (success) {
+        Navigator.pop(context);
+      } else {
+        ToastHelper.showErrorToast("add fail！！！");
+      }
+    });
   }
 
   Future updateTrader() async {}

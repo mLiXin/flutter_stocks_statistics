@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stocks_statistics/data/api/trader_api.dart';
-import 'package:flutter_stocks_statistics/data/entity/trader_info.dart';
+import 'package:flutter_stocks_statistics/data/model/trader_model.dart';
+import 'package:flutter_stocks_statistics/util/log_helper.dart';
 import 'package:flutter_stocks_statistics/util/navigator_helper.dart';
 import 'package:flutter_stocks_statistics/widget/common/appbar.dart';
+import 'package:flutter_stocks_statistics/widget/common/title_page.dart';
+import 'package:provider/provider.dart';
 
 class TraderListPage extends StatefulWidget {
   @override
@@ -10,35 +12,53 @@ class TraderListPage extends StatefulWidget {
 }
 
 class _TraderListPageState extends State<TraderListPage> {
-  List<TraderInfo> _data = [];
-
   @override
   void initState() {
     // TODO: implement initState
-    _getAllInfo();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: CommonAppBar("券商"),
-      body: Text("新增的券商：${_data[0].name}"),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: 30,
-        ),
-        onPressed: () {
-          NavigatorHelper.enterTraderModify(context, null);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (_) => TraderModel()),
+      ],
+      child: Consumer<TraderModel>(
+        builder: (context, trader, _) {
+          return CommonTitlePage(
+            title: CommonAppBar("券商"),
+            body: ListView.builder(
+                itemCount:
+                    trader.traderList == null ? 0 : trader.traderList.length,
+                itemExtent: 50.0, //强制高度为50.0
+                itemBuilder: (BuildContext context, int index) {
+                  LogHelper.e("index = $index");
+                  return Column(
+                    children: <Widget>[
+                      Expanded(
+                          child: Center(
+                              child: Text("${trader.traderList[index].name}"))),
+                      Divider(
+                        height: 0.2,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  );
+                }),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                size: 30,
+              ),
+              onPressed: () {
+                NavigatorHelper.enterTraderModify(context, null);
+              },
+            ),
+          );
         },
       ),
     );
-  }
-
-  Future _getAllInfo() async {
-    _data = await TraderApi.getTraderList();
-    setState(() {});
   }
 }
