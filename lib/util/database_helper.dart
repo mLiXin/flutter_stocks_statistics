@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:flutter_stocks_statistics/util/log_helper.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -27,6 +28,7 @@ final String columnOtherFee = "other_fee"; // 备用字段
 
 // summary
 final String tableSummary = "table_summary";
+final String columnSummaryId = "_id";
 final String columnSumAccountId = "account_id";
 final String columnSumStockId = "stock_id";
 final String columnSubscribeCount = "subcribe_count"; // 申购数量
@@ -59,6 +61,11 @@ class DatabaseHelper {
 
   //创建数据库表
   void _onCreate(Database db, int version) async {
+    //
+    await db.execute(
+        'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, num REAL)');
+    LogHelper.e("Table Test is created");
+
     // accountInfo
     await db.execute('''
           CREATE TABLE $tableAccount (
@@ -68,7 +75,7 @@ class DatabaseHelper {
             $columnAccount TEXT, 
             $columnPassword TEXT)
           ''');
-    print("Table $tableAccount is created");
+    LogHelper.e("Table $tableAccount is created");
 
     // tableTrader
     await db.execute('''
@@ -82,17 +89,20 @@ class DatabaseHelper {
             $columnTradingRate INTEGER,
             $columnOtherFee INTEGER)
     ''');
+    LogHelper.e("Table $tableTrader is created");
 
     // tableSummary
     await db.execute('''
       CREATE TABLE $tableSummary (
-            $columnSumAccountId INTEGER
-            $columnSumStockId INTEGER
-            $columnSubscribeCount INTEGER
-            $columnWinningCount INTEGER
-            $columnHoldCount INTEGER
-            $columnSoldOutTotal INTEGER
+            $columnSummaryId INTEGER PRIMARY KEY, 
+            $columnSumAccountId INTEGER,
+            $columnSumStockId INTEGER,
+            $columnSubscribeCount INTEGER,
+            $columnWinningCount INTEGER,
+            $columnHoldCount INTEGER,
+            $columnSoldOutTotal INTEGER)
     ''');
+    LogHelper.e("Table $tableSummary is created");
   }
 
   //关闭

@@ -1,5 +1,6 @@
 import 'package:flutter_stocks_statistics/data/entity/trader_info.dart';
 import 'package:flutter_stocks_statistics/util/database_helper.dart';
+import 'package:flutter_stocks_statistics/util/log_helper.dart';
 
 class TraderInfoHelper {
   /// 获取全部列表
@@ -19,14 +20,15 @@ class TraderInfoHelper {
       traderList.add(TraderInfo.fromMap(maps[i]));
     }
 
-    print("getTraderInfoList == $traderList");
+    LogHelper.e("getTraderInfoList == $traderList");
     return traderList;
   }
 
   /// 新增券商信息
-  static Future addTrader(TraderInfo traderInfo) async {
+  static Future<bool> addTrader(TraderInfo traderInfo) async {
     var db = await DatabaseHelper().db;
     traderInfo.id = await db.insert(tableTrader, traderInfo.toMap());
-    print("addTrader Success -- ${traderInfo.id}");
+    LogHelper.e("addTrader Success -- ${traderInfo.id}");
+    return traderInfo.id != null;
   }
 }

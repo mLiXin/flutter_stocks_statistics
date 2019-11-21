@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stocks_statistics/data/database/trader_info_helper.dart';
+import 'package:flutter_stocks_statistics/data/api/trader_api.dart';
+import 'package:flutter_stocks_statistics/data/entity/trader_info.dart';
 import 'package:flutter_stocks_statistics/util/navigator_helper.dart';
 import 'package:flutter_stocks_statistics/widget/common/appbar.dart';
 
@@ -8,7 +9,8 @@ class TraderListPage extends StatefulWidget {
   State<StatefulWidget> createState() => _TraderListPageState();
 }
 
-class _TraderListPageState extends State<TraderListPage>{
+class _TraderListPageState extends State<TraderListPage> {
+  List<TraderInfo> _data = [];
 
   @override
   void initState() {
@@ -22,7 +24,7 @@ class _TraderListPageState extends State<TraderListPage>{
     // TODO: implement build
     return Scaffold(
       appBar: CommonAppBar("券商"),
-      body: Text("券商"),
+      body: Text("新增的券商：${_data[0].name}"),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
@@ -35,8 +37,8 @@ class _TraderListPageState extends State<TraderListPage>{
     );
   }
 
-  Future _getAllInfo() async{
-    TraderInfoHelper.getTraderInfoList();
+  Future _getAllInfo() async {
+    _data = await TraderApi.getTraderList();
+    setState(() {});
   }
-
 }

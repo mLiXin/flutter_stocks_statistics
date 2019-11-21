@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stocks_statistics/data/database/trader_info_helper.dart';
+import 'package:flutter_stocks_statistics/data/api/trader_api.dart';
 import 'package:flutter_stocks_statistics/data/entity/trader_info.dart';
+import 'package:flutter_stocks_statistics/util/toast_helper.dart';
 import 'package:flutter_stocks_statistics/widget/common/appbar.dart';
 import 'package:flutter_stocks_statistics/widget/common/input_item.dart';
 
@@ -76,6 +77,11 @@ class _TraderModifyPageState extends State<TraderModifyPage> {
           ),
           HintInputItemDivider(),
           HintInputItem(
+            "申购手续费",
+            controller: _subscribeFeeController,
+          ),
+          HintInputItemDivider(),
+          HintInputItem(
             "中签手续费",
             controller: _winningFeeController,
           ),
@@ -103,15 +109,19 @@ class _TraderModifyPageState extends State<TraderModifyPage> {
   Future addTrader() async {
     TraderInfo info = new TraderInfo();
     info.name = _traderNameController.text;
-    info.financingFee = _financingFeeController.text as int;
-    info.winningFee = _winningFeeController.text as int;
-    info.subscriberFee = _subscribeFeeController.text as int;
-    info.tradingFee = _tradingFeeController.text as int;
-    info.tradingRate = _tradingRateController.text as int;
-    info.otherFee = _otherFeeController.text as int;
+    info.financingFee = int.parse(_financingFeeController.text);
+    info.winningFee = int.parse(_winningFeeController.text);
+    info.subscriberFee = int.parse(_subscribeFeeController.text);
+    info.tradingFee = int.parse(_tradingFeeController.text);
+    info.tradingRate = int.parse(_tradingRateController.text);
+    info.otherFee = int.parse(_otherFeeController.text);
 
-    int traderId = await TraderInfoHelper.addTrader(info);
-    Navigator.pop(context);
+    bool addSuccess = await TraderApi.addTrader(info);
+    if (addSuccess) {
+      Navigator.pop(context);
+    } else {
+      ToastHelper.showErrorToast("add fail！！！");
+    }
   }
 
   Future updateTrader() async {}
