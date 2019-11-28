@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stocks_statistics/constant/color.dart';
 
 class CommonItem extends StatelessWidget {
   final String itemName;
@@ -14,7 +15,7 @@ class CommonItem extends StatelessWidget {
     // TODO: implement build
     return Container(
       height: 50,
-      color: Colors.white,
+      color: Molor.background_white,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 20,right: 20),
       child: Text(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stocks_statistics/module/home/home_page.dart';
 import 'package:flutter_stocks_statistics/module/mine/trader_list_page.dart';
 import 'package:flutter_stocks_statistics/module/mine/trader_modify_page.dart';
+import 'package:flutter_stocks_statistics/module/mine/user_login_page.dart';
+import 'package:flutter_stocks_statistics/module/mine/user_register_page.dart';
 
 class NavigatorHelper {
   ///主页
@@ -10,6 +12,17 @@ class NavigatorHelper {
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
         (route) => route == null);
+  }
+
+  /// 登录
+  static enterUserLogin(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserLoginPage()));
+  }
+
+  static enterUserRegister(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserRegisterPage()));
   }
 
   /// 券商列表页

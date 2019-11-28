@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stocks_statistics/constant/color.dart';
 import 'package:flutter_stocks_statistics/data/model/trader_model.dart';
 import 'package:flutter_stocks_statistics/util/log_helper.dart';
 import 'package:flutter_stocks_statistics/util/navigator_helper.dart';
@@ -12,9 +13,12 @@ class TraderListPage extends StatefulWidget {
 }
 
 class _TraderListPageState extends State<TraderListPage> {
+  TraderModel _traderModel = TraderModel();
+
   @override
   void initState() {
     // TODO: implement initState
+    _traderModel.getTraderList();
     super.initState();
   }
 
@@ -23,7 +27,7 @@ class _TraderListPageState extends State<TraderListPage> {
     // TODO: implement build
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (_) => TraderModel()),
+        ChangeNotifierProvider(builder: (_) => _traderModel),
       ],
       child: Consumer<TraderModel>(
         builder: (context, trader, _) {
@@ -34,15 +38,18 @@ class _TraderListPageState extends State<TraderListPage> {
                     trader.traderList == null ? 0 : trader.traderList.length,
                 itemExtent: 50.0, //强制高度为50.0
                 itemBuilder: (BuildContext context, int index) {
-                  LogHelper.e("index = $index");
+                  LogHelper.e("index = ${trader.traderList[index].name}");
                   return Column(
                     children: <Widget>[
                       Expanded(
-                          child: Center(
-                              child: Text("${trader.traderList[index].name}"))),
+                          child: Container(
+                        color: Molor.background_white,
+                        child: Center(
+                            child: Text("${trader.traderList[index].name}")),
+                      )),
                       Divider(
                         height: 0.2,
-                        color: Colors.grey,
+                        color: Molor.divider,
                       ),
                     ],
                   );

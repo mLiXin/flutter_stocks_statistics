@@ -66,41 +66,34 @@ class _TraderModifyPageState extends State<TraderModifyPage> {
       ),
       body: Column(
         children: <Widget>[
-          HintInputItem(
+          CommonInputItem(
             "券商名字",
-            controller: _traderNameController,
+            _traderNameController,
           ),
-          HintInputItemDivider(),
-          HintInputItem(
+          CommonInputItem(
             "融资手续费",
-            controller: _financingFeeController,
+            _financingFeeController,
           ),
-          HintInputItemDivider(),
-          HintInputItem(
+          CommonInputItem(
             "申购手续费",
-            controller: _subscribeFeeController,
+            _subscribeFeeController,
           ),
-          HintInputItemDivider(),
-          HintInputItem(
+          CommonInputItem(
             "中签手续费",
-            controller: _winningFeeController,
+            _winningFeeController,
           ),
-          HintInputItemDivider(),
-          HintInputItem(
+          CommonInputItem(
             "交易手续费",
-            controller: _tradingFeeController,
+            _tradingFeeController,
           ),
-          HintInputItemDivider(),
-          HintInputItem(
+          CommonInputItem(
             "交易费率",
-            controller: _tradingRateController,
+            _tradingRateController,
           ),
-          HintInputItemDivider(),
-          HintInputItem(
+          CommonInputItem(
             "其他手续费",
-            controller: _otherFeeController,
+            _otherFeeController,
           ),
-          HintInputItemDivider(),
         ],
       ),
     );
@@ -154,6 +147,7 @@ class HintInputItem extends StatelessWidget {
         ),
         Expanded(
           child: CommonInputItem(
+            "",
             controller,
             hintText: hintText,
             padding: EdgeInsets.only(left: 2, right: 10),
