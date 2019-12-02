@@ -14,6 +14,7 @@ class Molor {
 
   /// text
   static const Color text_gray = Color(0xFF999999);
+  static const Color text_black = Color(0xFF000000);
 
   /// button
   static const Color btn_background_white = Color(0xFFFFFFFF);

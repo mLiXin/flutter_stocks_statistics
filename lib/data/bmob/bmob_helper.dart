@@ -6,6 +6,6 @@ class BmobHelper {
   static const String masterKey = "388afd3a164092999096744dfe7e0263";
 
   static void init() {
-    Bmob.init(apiId, apiKey);
+    Bmob.initMasterKey(apiId, apiKey, masterKey);
   }
 }

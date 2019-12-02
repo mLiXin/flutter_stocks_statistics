@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stocks_statistics/data/api/user_api.dart';
+import 'package:flutter_stocks_statistics/util/toast_helper.dart';
 import 'package:flutter_stocks_statistics/widget/common/appbar.dart';
 import 'package:flutter_stocks_statistics/widget/common/button.dart';
 import 'package:flutter_stocks_statistics/widget/common/input_item.dart';
@@ -42,7 +44,29 @@ class _UserRegisterPage extends State<UserRegisterPage> {
             child: Container(
               alignment: Alignment.topCenter,
               margin: EdgeInsets.only(top: 20),
-              child: FillCornerBtn("注册"),
+              child: FillCornerBtn(
+                "注册",
+                onPressed: () {
+                  if (_mobileController.text.isEmpty) {
+                    ToastHelper.showErrorToast("手机号不能为空");
+                    return;
+                  }
+
+                  if (_passwordController.text.isEmpty) {
+                    ToastHelper.showErrorToast("密码不能为空");
+                    return;
+                  }
+                  UserApi.register(
+                          _mobileController.text, _passwordController.text)
+                      .then((success) {
+                    if (success) {
+                      Navigator.pop(context);
+                    } else {
+                      ToastHelper.showErrorToast("注册失败");
+                    }
+                  });
+                },
+              ),
             ),
           )
         ],

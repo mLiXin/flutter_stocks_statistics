@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stocks_statistics/data/api/trader_api.dart';
 import 'package:flutter_stocks_statistics/data/entity/trader_info.dart';
+import 'package:flutter_stocks_statistics/util/log_helper.dart';
 import 'package:flutter_stocks_statistics/util/toast_helper.dart';
 import 'package:flutter_stocks_statistics/widget/common/appbar.dart';
 import 'package:flutter_stocks_statistics/widget/common/input_item.dart';
@@ -52,6 +53,11 @@ class _TraderModifyPageState extends State<TraderModifyPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
+    var args = ModalRoute.of(context).settings.arguments;
+    LogHelper.e("args:----start");
+    LogHelper.e("args:${args.toString()}");
+
     return Scaffold(
       appBar: CommonAppBar(
         widget.traderId == null ? "新增" : "修改",
@@ -109,13 +115,12 @@ class _TraderModifyPageState extends State<TraderModifyPage> {
     info.tradingRate = int.parse(_tradingRateController.text);
     info.otherFee = int.parse(_otherFeeController.text);
 
-    await TraderApi.addTrader(info).then((success) {
-      if (success) {
-        Navigator.pop(context);
-      } else {
-        ToastHelper.showErrorToast("add fail！！！");
-      }
-    });
+    bool success = await TraderApi.addTrader(info);
+    if (success) {
+      Navigator.pop(context);
+    } else {
+      ToastHelper.showErrorToast("add fail！！！");
+    }
   }
 
   Future updateTrader() async {}

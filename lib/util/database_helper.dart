@@ -7,17 +7,24 @@ import 'package:sqflite/sqflite.dart';
 
 final String dataBaseName = "stocks_statistics.db";
 
+// user
+final String tableUser = "table_user";
+final String columnUserId = "user_id";
+final String columnUserName = "user_name";
+final String columnUserMobile = "user_mobile";
+final String columnUserPassword = "user_password";
+
 // account
 final String tableAccount = "table_account";
-final String columnAccountUserId = "account_user_object_id"; // 该账户对应的userId
-final String columnAccountTraderId = "account_trader_object_id"; // 该账户对应的traderId
+final String columnAccountUserId = "account_user_id"; // 该账户对应的userId
+final String columnAccountTraderId = "account_trader_id"; // 该账户对应的traderId
 final String columnAccountName = "name";
 final String columnAccount = "account";
 final String columnPassword = "password";
 
 // trader
 final String tableTrader = "table_trader";
-final String columnTraderUserId = "trader_user_object_id"; //该券商对应的userId
+final String columnTraderUserId = "trader_user_id"; //该券商对应的userId
 final String columnTraderName = "name";
 final String columnFinancingFee = "financing_fee"; // 融资手续费
 final String columnWinningFee = "winning_fee"; // 中签手续费
@@ -28,8 +35,8 @@ final String columnOtherFee = "other_fee"; // 备用字段
 
 // summary
 final String tableSummary = "table_summary";
-final String columnSummaryUserId = "summary_user_object_id"; // 该summary对应的userId
-final String columnSumAccountId = "summary_account_object_id"; // 该summary对应的accountId
+final String columnSummaryUserId = "summary_user_id"; // 该summary对应的userId
+final String columnSumAccountId = "summary_account_id"; // 该summary对应的accountId
 final String columnSumStockId = "stock_object_id";
 final String columnSubscribeCount = "subcribe_count"; // 申购数量
 final String columnWinningCount = "winning_count"; // 中签数量
@@ -41,7 +48,7 @@ final String columnGainTotal = "gain_total"; // 当前盈利
 
 // stock
 final String tableStock = "table_stock";
-final String columnStockUserId = "stock_user_object_id";
+final String columnStockUserId = "stock_user_id";
 final String columnStockCode = "stock_code";
 final String columnStockName = "stock_name";
 final String columnStockPrice = "stock_price"; // 定价
@@ -72,9 +79,14 @@ class DatabaseHelper {
 
   //创建数据库表
   void _onCreate(Database db, int version) async {
-    //
-    await db.execute(
-        'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, num REAL)');
+    // userInfo
+    await db.execute('''
+          CREATE TABLE $tableUser (
+            $columnUserId TEXT, 
+            $columnUserName TEXT, 
+            $columnUserMobile TEXT, 
+            $columnUserPassword TEXT)
+          ''');
     LogHelper.e("Table Test is created");
 
     // accountInfo

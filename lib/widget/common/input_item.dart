@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stocks_statistics/constant/color.dart';
 
-final Color inputBackgroundWhite = Color(0xFFFFFFFF);
-final Color inputTextBlack = Color(0xFF1B2944);
-final Color textGrey = Color(0xFF999999);
-
 class CommonInputItem extends StatelessWidget {
   final bool isPassword;
   final EdgeInsetsGeometry margin;
@@ -61,12 +57,12 @@ class CommonInputItem extends StatelessWidget {
               controller: controller,
               inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
               enabled: enabled,
-              style: TextStyle(fontSize: 15, color: inputTextBlack),
+              style: TextStyle(fontSize: 15, color: Molor.text_black),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: hintText,
-                  hintStyle: TextStyle(fontSize: 15, color: textGrey)),
-              cursorColor: inputTextBlack,
+                  hintStyle: TextStyle(fontSize: 15, color: Molor.text_gray)),
+              cursorColor: Molor.text_black,
               obscureText: isPassword,
               onChanged: onChange,
             ),
