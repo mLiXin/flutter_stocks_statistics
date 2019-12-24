@@ -13,6 +13,8 @@ class RoutesHelper {
   static const String trader_list = "trader_list";
   static const String trader_modify = "trader_modify";
 
+
+
   static Map<String, WidgetBuilder> routes = {
     user_login: (context) => UserLoginPage(),
     user_register: (context) => UserRegisterPage()
